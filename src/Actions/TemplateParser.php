@@ -31,7 +31,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
         });
     }
 
