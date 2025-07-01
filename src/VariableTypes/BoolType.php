@@ -4,6 +4,7 @@ namespace SmartCms\TemplateBuilder\VariableTypes;
 
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Component;
 use SmartCms\TemplateBuilder\Support\VariableTypeInterface;
 
 class BoolType implements VariableTypeInterface
@@ -23,7 +24,7 @@ class BoolType implements VariableTypeInterface
         return false;
     }
 
-    public function getSchema(string $name): Field
+    public function getSchema(string $name): Field | Component
     {
         return Toggle::make($name);
     }
