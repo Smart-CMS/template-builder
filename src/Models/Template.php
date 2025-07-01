@@ -37,7 +37,7 @@ class Template extends Model
 
     public function section()
     {
-        return $this->belongsTo(Section::class, 'template_section_id');
+        return $this->belongsTo(Section::class, 'section_id');
     }
 
     public function getTable()
