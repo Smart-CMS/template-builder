@@ -31,7 +31,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
         });
     }
 
@@ -50,7 +50,7 @@ class TemplateParser
             }
             $type = $this->variableTypeRegistry->get($rules[0]);
             if (! $type) {
-                throw new \InvalidArgumentException("Invalid type for variable $name");
+                throw new \InvalidArgumentException("Invalid type {$rules[0]} for variable $name");
             }
             $variableSchema = $this->variableTypeRegistry->getSchema($name, $rules[0], implode('|', $validation));
             if ($variableSchema) {

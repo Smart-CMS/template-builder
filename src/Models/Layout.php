@@ -35,4 +35,9 @@ class Layout extends Model
     {
         return TemplateTypeEnum::LAYOUT;
     }
+
+    public function getTable()
+    {
+        return config('template-builder.layouts_table_name', 'layouts');
+    }
 }

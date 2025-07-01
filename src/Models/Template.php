@@ -39,4 +39,9 @@ class Template extends Model
     {
         return $this->belongsTo(Section::class, 'template_section_id');
     }
+
+    public function getTable()
+    {
+        return config('template-builder.templates_table_name', 'templates');
+    }
 }

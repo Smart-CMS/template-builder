@@ -39,11 +39,16 @@ class Section extends Model
 
     public function templates()
     {
-        return $this->hasMany(Template::class);
+        return $this->hasMany(Template::class, 'section_id', 'id');
     }
 
     public static function getTemplateType(): TemplateTypeEnum
     {
         return TemplateTypeEnum::SECTION;
+    }
+
+    public function getTable()
+    {
+        return config('template-builder.sections_table_name', 'sections');
     }
 }
