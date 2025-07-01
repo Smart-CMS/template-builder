@@ -4,6 +4,7 @@ namespace SmartCms\TemplateBuilder\VariableTypes;
 
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Component;
 use SmartCms\TemplateBuilder\Support\VariableTypeInterface;
 
 class TextType implements VariableTypeInterface
@@ -23,7 +24,7 @@ class TextType implements VariableTypeInterface
         return '';
     }
 
-    public function getSchema(string $name): Field
+    public function getSchema(string $name): Field | Component
     {
         return TextInput::make($name);
     }
