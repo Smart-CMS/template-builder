@@ -26,7 +26,7 @@ class ImageType implements VariableTypeInterface
 
     public function getSchema(string $name): Field | Component
     {
-        return ImageUpload::make($name);
+        return ImageUpload::make($name, label: 'Image');
     }
 
     public function getValue(mixed $value): mixed
