@@ -21,7 +21,7 @@ class HtmlType implements VariableTypeInterface
 
     public function getDefaultValue(): mixed
     {
-        return $this->mutateString("<b>Default HTML</b>");
+        return $this->mutateString('<b>Default HTML</b>');
     }
 
     public function getSchema(string $name): Field | Component
@@ -42,6 +42,7 @@ class HtmlType implements VariableTypeInterface
         if (is_null($value)) {
             return $this->getDefaultValue();
         }
+
         return $this->mutateString($value);
     }
 

@@ -96,10 +96,11 @@ class VariableTypeRegistry
         }
         $result->schema([
             ...$this->getTranslateFields($prefix . $name),
-            $component
+            $component,
         ]);
         // if ($type instanceof ArrayType) {
         $result->columnSpanFull();
+
         // }
         return $result;
     }
@@ -124,7 +125,7 @@ class VariableTypeRegistry
                     $arraySchema[$nestedName] = $nestedType;
                 }
             }
-            if (!is_array($value)) {
+            if (! is_array($value)) {
                 return [];
             }
             foreach ($value as $array_item) {
@@ -138,17 +139,20 @@ class VariableTypeRegistry
                 }
                 $arrayValues[] = $itemValues;
             }
+
             return $arrayValues;
         }
         if (is_null($value)) {
             return $type->getDefaultValue();
         }
+
         try {
             return $type->getValue($value);
         } catch (\Exception $e) {
             Log::debug('Error getting value for variable ' . $name . ' with type ' . $type::getName() . ' and value ' . $value . ' with error ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
             ]);
+
             return $type->getDefaultValue();
         }
     }
@@ -161,9 +165,10 @@ class VariableTypeRegistry
     public function getTranslateAction(string $name, Field | Component $component): ?Action
     {
         /** @phpstan-ignore-next-line */
-        if ($component instanceof ArrayType || !$component instanceof Field || $component instanceof BaseFileUpload) {
+        if ($component instanceof ArrayType || ! $component instanceof Field || $component instanceof BaseFileUpload) {
             return null;
         }
+
         return Action::make('translate_' . $name)
             ->icon(function (): string {
                 return 'heroicon-o-language';
@@ -180,11 +185,13 @@ class VariableTypeRegistry
             ->schema(function (Schema $schema) use ($component) {
                 $schemas = app('lang')->adminLanguages()->map(function ($lang) use ($component) {
                     $componentCopy = clone $component;
+
                     return Section::make($this->getLabelFromName($lang->name))
                         ->compact()->schema([
-                            $componentCopy->statePath($lang->slug)->name($lang->slug)
+                            $componentCopy->statePath($lang->slug)->name($lang->slug),
                         ]);
                 });
+
                 return $schema->schema($schemas->toArray());
             })
             ->action(function (array $data, Set $set, $get) use ($component) {
@@ -221,12 +228,14 @@ class VariableTypeRegistry
         if (count($nameArray) == 1) {
             return $name;
         }
+
         return end($nameArray);
     }
 
     public function getNestedType(string $rules): string
     {
         $rules = explode('|', $rules);
+
         return $rules[0];
     }
 }

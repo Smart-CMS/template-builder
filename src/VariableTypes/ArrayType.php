@@ -34,6 +34,7 @@ class ArrayType implements VariableTypeInterface
         if (! is_array($value)) {
             return [];
         }
+
         return array_map(function ($item) {
             return array_map(function ($item) {
                 return $item;

@@ -13,14 +13,14 @@ trait HasVariables
     public function schema(): Attribute
     {
         return new Attribute(
-            get: fn() => TemplateParser::make(static::getTemplateType())->getComponentSchema($this->path)
+            get: fn () => TemplateParser::make(static::getTemplateType())->getComponentSchema($this->path)
         );
     }
 
     public function variables(): Attribute
     {
         return new Attribute(
-            get: fn() => TemplateParser::make(static::getTemplateType())->getComponentVariables($this->path, $this->value ?? [])
+            get: fn () => TemplateParser::make(static::getTemplateType())->getComponentVariables($this->path, $this->value ?? [])
         );
     }
 

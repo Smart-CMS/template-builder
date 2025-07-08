@@ -3,7 +3,6 @@
 namespace SmartCms\TemplateBuilder\VariableTypes;
 
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Component;
 use SmartCms\Support\Admin\Components\Forms\ImageUpload;
 use SmartCms\TemplateBuilder\Support\VariableTypeInterface;
