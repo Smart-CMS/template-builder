@@ -3,11 +3,12 @@
 namespace SmartCms\TemplateBuilder\VariableTypes;
 
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Component;
+use SmartCms\Support\Admin\Components\Forms\ImageUpload;
 use SmartCms\TemplateBuilder\Support\VariableTypeInterface;
 
-class LinkType implements VariableTypeInterface
+class ImageType implements VariableTypeInterface
 {
     public static function make(): self
     {
@@ -16,21 +17,21 @@ class LinkType implements VariableTypeInterface
 
     public static function getName(): string
     {
-        return 'link';
+        return 'image';
     }
 
     public function getDefaultValue(): mixed
     {
-        return url('/');
+        return false;
     }
 
     public function getSchema(string $name): Field | Component
     {
-        return TextInput::make($name)->url();
+        return ImageUpload::make($name);
     }
 
     public function getValue(mixed $value): mixed
     {
-        return asset($value);
+        return $value ?? false;
     }
 }

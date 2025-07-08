@@ -31,7 +31,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
         });
     }
 
@@ -52,7 +52,7 @@ class TemplateParser
             if (! $type) {
                 throw new \InvalidArgumentException("Invalid type {$rules[0]} for variable $name");
             }
-            $variableSchema = $this->variableTypeRegistry->getSchema($name, $rules[0], implode('|', $validation));
+            $variableSchema = $this->variableTypeRegistry->getSchema($name, $rules[0], implode('|', $validation), fullSchema: $schema);
             if ($variableSchema) {
                 $filamentSchema[] = $variableSchema;
             }
@@ -73,7 +73,14 @@ class TemplateParser
             if (count($rules) < 1) {
                 throw new \InvalidArgumentException("Invalid rules for variable $name");
             }
-            $variables[$name] = $this->variableTypeRegistry->getVariable($name, $rules[0], $values[$name] ?? null);
+            if (str_contains($name, '.*.')) {
+                continue;
+            }
+            $value = $values[$name] ?? null;
+            if (app('lang')->adminLanguages()->count() > 1) {
+                $value = $values[current_lang()][$name] ?? $value;
+            }
+            $variables[$name] = $this->variableTypeRegistry->getVariable($name, $rules[0], $value, $schema);
         }
 
         return $variables;

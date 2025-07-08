@@ -2,7 +2,9 @@
 
 namespace SmartCms\TemplateBuilder\Admin\Layouts\Pages;
 
+use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\ListRecords;
+use SmartCms\Support\Admin\Components\Actions\SettingsAction;
 use SmartCms\TemplateBuilder\Actions\TemplateParser;
 use SmartCms\TemplateBuilder\Admin\Layouts\LayoutResource;
 use SmartCms\TemplateBuilder\Models\Layout;

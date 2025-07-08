@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SmartCms\TemplateBuilder\Support;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 
 class Template
@@ -18,6 +18,7 @@ class Template
     public function __construct(VariableTypeRegistry $variableTypeRegistry)
     {
         $this->variableTypeRegistry = $variableTypeRegistry;
+        $this->template = collect();
     }
 
     public function get(): Collection
@@ -46,7 +47,7 @@ class Template
     {
         return <<<'blade'
                 @foreach ($template as $section)
-                    @include($section->view_path, $section->variables)
+                    @include($section->section->view_path, $section->section->variables)
                 @endforeach
         blade;
     }

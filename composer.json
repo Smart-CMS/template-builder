@@ -22,6 +22,8 @@
     "require": {
         "php": "^8.3",
         "filament/filament": "^4.0",
+        "smart-cms/lang": "^1.0",
+        "smart-cms/support": "*",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -45,7 +47,7 @@
         }
     },
     "scripts": {
-        "analyse": "vendor/bin/phpstan analyse",
+        "analyse": "phpstan analyse --memory-limit 1G -c phpstan.neon.dist",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"

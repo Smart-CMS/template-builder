@@ -3,11 +3,11 @@
 namespace SmartCms\TemplateBuilder\VariableTypes;
 
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Components\Component;
 use SmartCms\TemplateBuilder\Support\VariableTypeInterface;
 
-class TextType implements VariableTypeInterface
+class ArrayType implements VariableTypeInterface
 {
     public static function make(): self
     {
@@ -16,21 +16,28 @@ class TextType implements VariableTypeInterface
 
     public static function getName(): string
     {
-        return 'text';
+        return 'array';
     }
 
     public function getDefaultValue(): mixed
     {
-        return 'Default text';
+        return [];
     }
 
     public function getSchema(string $name): Field | Component
     {
-        return TextInput::make($name);
+        return Repeater::make($name)->columns(2);
     }
 
     public function getValue(mixed $value): mixed
     {
-        return $value ?? $this->getDefaultValue();
+        if (! is_array($value)) {
+            return [];
+        }
+        return array_map(function ($item) {
+            return array_map(function ($item) {
+                return $item;
+            }, $item);
+        }, $value);
     }
 }
