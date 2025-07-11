@@ -2,9 +2,6 @@
 
 namespace SmartCms\TemplateBuilder\Actions;
 
-use Filament\Forms\Components\Builder;
-use Filament\Forms\Components\Builder\Block;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Collection;
@@ -37,7 +34,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
         });
     }
 
@@ -55,6 +52,7 @@ class TemplateParser
                 }, $variablesSchema));
             });
         })->toArray();
+
         return [Tabs::make('translates')->schema($tabs)->columnSpanFull()];
     }
 

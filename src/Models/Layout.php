@@ -24,8 +24,8 @@ use Spatie\Translatable\HasTranslations;
 class Layout extends Model
 {
     use HasFactory;
-    use HasVariables;
     use HasTranslations;
+    use HasVariables;
 
     protected $guarded = [];
 

@@ -4,7 +4,6 @@ namespace SmartCms\TemplateBuilder\Admin\Sections\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Database\Eloquent\Model;
 use SmartCms\TemplateBuilder\Admin\Sections\SectionResource;
 
 class EditSection extends EditRecord
