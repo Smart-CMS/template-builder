@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use SmartCms\TemplateBuilder\Support\TemplateTypeEnum;
 use SmartCms\TemplateBuilder\Traits\HasVariables;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * Class TemplateSection
@@ -24,6 +25,7 @@ class Section extends Model
 {
     use HasFactory;
     use HasVariables;
+    use HasTranslations;
 
     protected $guarded = [];
 
@@ -31,6 +33,8 @@ class Section extends Model
         'status' => 'boolean',
         'value' => 'array',
     ];
+
+    protected array $translatable = ['value'];
 
     public function morphs()
     {
@@ -50,5 +54,10 @@ class Section extends Model
     public function getTable()
     {
         return config('template-builder.sections_table_name', 'sections');
+    }
+
+    public function getFallbackLocale(): string
+    {
+        return main_lang();
     }
 }

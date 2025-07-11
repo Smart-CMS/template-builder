@@ -91,11 +91,12 @@ class VariableTypeRegistry
                 }
             }
             $component->schema($arraySchema);
-        } else {
-            $result->headerActions([$this->getTranslateAction($name, $component)]);
         }
+        //  else {
+        //     $result->headerActions([$this->getTranslateAction($name, $component)]);
+        // }
         $result->schema([
-            ...$this->getTranslateFields($prefix . $name),
+            // ...$this->getTranslateFields($prefix . $name),
             $component,
         ]);
         // if ($type instanceof ArrayType) {
@@ -132,9 +133,6 @@ class VariableTypeRegistry
                 $itemValues = [];
                 foreach ($arraySchema as $variable_name => $variable_type) {
                     $variableTypeValue = $array_item[$variable_name] ?? null;
-                    if (app('lang')->adminLanguages()->count() > 1) {
-                        $variableTypeValue = $array_item[current_lang()][$variable_name] ?? $variableTypeValue;
-                    }
                     $itemValues[$variable_name] = $this->getVariable($variable_name, $variable_type, $variableTypeValue, $fullSchema);
                 }
                 $arrayValues[] = $itemValues;

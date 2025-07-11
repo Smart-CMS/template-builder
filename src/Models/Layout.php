@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use SmartCms\TemplateBuilder\Support\TemplateTypeEnum;
 use SmartCms\TemplateBuilder\Traits\HasVariables;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * Class Layout
@@ -24,12 +25,15 @@ class Layout extends Model
 {
     use HasFactory;
     use HasVariables;
+    use HasTranslations;
 
     protected $guarded = [];
 
     protected $casts = [
         'value' => 'array',
     ];
+
+    protected $translatable = ['value'];
 
     public static function getTemplateType(): TemplateTypeEnum
     {
@@ -39,5 +43,10 @@ class Layout extends Model
     public function getTable()
     {
         return config('template-builder.layouts_table_name', 'layouts');
+    }
+
+    public function getFallbackLocale(): string
+    {
+        return main_lang();
     }
 }

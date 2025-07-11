@@ -2,8 +2,14 @@
 
 namespace SmartCms\TemplateBuilder\Actions;
 
+use Filament\Forms\Components\Builder;
+use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use SmartCms\Lang\Models\Language;
 use SmartCms\TemplateBuilder\Support\TemplateTypeEnum;
 use SmartCms\TemplateBuilder\Support\VariableTypeRegistry;
 
@@ -31,7 +37,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
         });
     }
 
@@ -41,8 +47,21 @@ class TemplateParser
             return [];
         }
         $schema = ParseSchemaDirective::run(resource_path('views/' . $path));
-        $filamentSchema = [];
-        foreach ($schema as $name => $rules) {
+        $variablesSchema = $this->getVariablesSchema($schema);
+        $tabs = app('lang')->adminLanguages()->map(function (Language $lang) use ($variablesSchema, $schema) {
+            return Tab::make($lang->name)->schema(function () use ($variablesSchema, $lang, $schema) {
+                return array_filter(array_map(function ($variable) use ($lang, $schema) {
+                    return $this->variableTypeRegistry->getSchema($variable['name'], $variable['type'], $variable['validation'], 'value.' . $lang->slug . '.', $schema);
+                }, $variablesSchema));
+            });
+        })->toArray();
+        return [Tabs::make('translates')->schema($tabs)->columnSpanFull()];
+    }
+
+    public function getVariablesSchema(array $componentSchema): array
+    {
+        $variablesSchema = [];
+        foreach ($componentSchema as $name => $rules) {
             $rules = explode('|', $rules);
             $validation = array_slice($rules, 1);
             if (count($rules) < 1) {
@@ -52,13 +71,10 @@ class TemplateParser
             if (! $type) {
                 throw new \InvalidArgumentException("Invalid type {$rules[0]} for variable $name");
             }
-            $variableSchema = $this->variableTypeRegistry->getSchema($name, $rules[0], implode('|', $validation), fullSchema: $schema);
-            if ($variableSchema) {
-                $filamentSchema[] = $variableSchema;
-            }
+            $variablesSchema[] = ['name' => $name, 'type' => $rules[0], 'validation' => implode('|', $validation)];
         }
 
-        return $filamentSchema;
+        return $variablesSchema;
     }
 
     public function getComponentVariables(?string $path, array $values = []): array
