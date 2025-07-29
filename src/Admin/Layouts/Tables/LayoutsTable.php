@@ -2,6 +2,8 @@
 
 namespace SmartCms\TemplateBuilder\Admin\Layouts\Tables;
 
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -26,8 +28,12 @@ class LayoutsTable
             ])
             ->filters([])
             ->recordActions([
-                EditAction::make(),
+                // EditAction::make(),
             ])
-            ->toolbarActions([]);
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 }

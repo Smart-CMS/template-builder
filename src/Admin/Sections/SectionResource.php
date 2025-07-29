@@ -17,8 +17,6 @@ use SmartCms\TemplateBuilder\TemplateBuilderPlugin;
 
 class SectionResource extends Resource
 {
-    protected static ?string $slug = 'sections1';
-
     protected static ?string $model = ModelsSection::class;
 
     protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedSparkles;

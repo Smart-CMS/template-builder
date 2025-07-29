@@ -20,8 +20,6 @@ class LayoutResource extends Resource
 {
     protected static ?string $model = Layout::class;
 
-    protected static ?string $slug = 'layouts1';
-
     protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedSquare3Stack3d;
 
     protected static ?int $navigationSort = 2;

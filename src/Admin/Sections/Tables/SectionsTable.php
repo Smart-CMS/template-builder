@@ -16,6 +16,7 @@ class SectionsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('name')->label(__('template-builder::admin.name')),
                 ToggleColumn::make('status')->label(__('template-builder::admin.status')),
@@ -36,10 +37,7 @@ class SectionsTable
                     false => __('template-builder::admin.inactive'),
                 ]),
             ])
-            ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
+            ->recordActions([])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
