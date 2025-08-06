@@ -13,6 +13,7 @@ class LayoutsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 TextColumn::make('name')->label(__('template-builder::admin.name')),
                 TextColumn::make('updated_at')->translateLabel()
