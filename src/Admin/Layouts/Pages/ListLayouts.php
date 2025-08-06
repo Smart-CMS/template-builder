@@ -70,7 +70,7 @@ class ListLayouts extends ListRecords
             }
 
             // Perform bulk updates
-            if (!empty($updates)) {
+            if (! empty($updates)) {
                 foreach ($updates as $update) {
                     Layout::query()->where('id', $update['id'])->update([
                         'name' => $update['name'],
