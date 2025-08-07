@@ -34,7 +34,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
         });
     }
 
@@ -45,6 +45,9 @@ class TemplateParser
         }
         $schema = ParseSchemaDirective::run(resource_path('views/' . $path));
         $variablesSchema = $this->getVariablesSchema($schema);
+        if (count($variablesSchema) < 1) {
+            return [];
+        }
         $tabs = app('lang')->adminLanguages()->map(function (Language $lang) use ($variablesSchema, $schema) {
             return Tab::make($lang->name)->schema(function () use ($variablesSchema, $lang, $schema) {
                 return array_filter(array_map(function ($variable) use ($lang, $schema) {
@@ -52,7 +55,6 @@ class TemplateParser
                 }, $variablesSchema));
             });
         })->toArray();
-
         return [Tabs::make('translates')->schema($tabs)->columnSpanFull()];
     }
 
