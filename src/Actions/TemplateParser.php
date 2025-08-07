@@ -34,7 +34,7 @@ class TemplateParser
             $path = $this->type->getPath();
             $files = File::allFiles($path);
 
-            return collect($files)->map(fn($file) => $this->parse($file->getRealPath()));
+            return collect($files)->map(fn ($file) => $this->parse($file->getRealPath()));
         });
     }
 
@@ -55,6 +55,7 @@ class TemplateParser
                 }, $variablesSchema));
             });
         })->toArray();
+
         return [Tabs::make('translates')->schema($tabs)->columnSpanFull()];
     }
 
