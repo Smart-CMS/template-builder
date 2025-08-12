@@ -25,7 +25,7 @@ class ImageType implements VariableTypeInterface
             'width' => 300,
             'height' => 300,
             'source' => asset('favicon.ico'),
-            'alt' => 'default image'
+            'alt' => 'default image',
         ];
     }
 
@@ -40,7 +40,7 @@ class ImageType implements VariableTypeInterface
             'width' => 300,
             'height' => 300,
             'source' => asset('favicon.ico'),
-            'alt' => 'default image'
+            'alt' => 'default image',
         ];
     }
 }
