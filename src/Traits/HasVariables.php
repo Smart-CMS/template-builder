@@ -13,19 +13,31 @@ trait HasVariables
     public function schema(): Attribute
     {
         return new Attribute(
-            get: fn () => TemplateParser::make(static::getTemplateType())->getComponentSchema($this->path)
+            get: fn() => TemplateParser::make(static::getTemplateType())->getComponentSchema($this->path)
         );
     }
 
     public function variables(): Attribute
     {
         return new Attribute(
-            get: fn () => TemplateParser::make(static::getTemplateType())->getComponentVariables($this->path, $this->value ?? [])
+            get: fn() => TemplateParser::make(static::getTemplateType())->getComponentVariables($this->path, $this->mutateValue($this->value))
         );
     }
 
-    public function getVariables(?array $value = null): array
+    public function mutateValue(mixed $value): array
     {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        return $value;
+    }
+
+    public function getVariables(mixed $value = []): array
+    {
+        if (!is_array($value)) {
+            $value = [];
+        }
         return TemplateParser::make(static::getTemplateType())->getComponentVariables($this->path, $value ?? $this->value ?? []);
     }
 

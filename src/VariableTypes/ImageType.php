@@ -21,7 +21,12 @@ class ImageType implements VariableTypeInterface
 
     public function getDefaultValue(): mixed
     {
-        return false;
+        return [
+            'width' => 300,
+            'height' => 300,
+            'source' => asset('favicon.ico'),
+            'alt' => 'default image'
+        ];
     }
 
     public function getSchema(string $name): Field | Component
@@ -31,6 +36,11 @@ class ImageType implements VariableTypeInterface
 
     public function getValue(mixed $value): mixed
     {
-        return $value ?? false;
+        return $value ?? [
+            'width' => 300,
+            'height' => 300,
+            'source' => asset('favicon.ico'),
+            'alt' => 'default image'
+        ];
     }
 }

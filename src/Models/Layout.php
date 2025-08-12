@@ -30,7 +30,7 @@ class Layout extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'value' => 'array',
+        'value' => 'json',
     ];
 
     protected $translatable = ['value'];
