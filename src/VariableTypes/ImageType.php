@@ -36,11 +36,15 @@ class ImageType implements VariableTypeInterface
 
     public function getValue(mixed $value): mixed
     {
-        return $value ?? [
-            'width' => 300,
-            'height' => 300,
-            'source' => asset('favicon.ico'),
-            'alt' => 'default image',
-        ];
+        if (!is_array($value)) {
+            return $this->getDefaultValue();
+        }
+        $alt = $value[current_lang()] ?? $value['alt'] ?? __('Default alt');
+        if (!isset($value['source']) || !isset($value['width']) || !isset($value['height'])) {
+            return $this->getDefaultValue();
+        }
+        $value['source'] = asset($value['source']);
+        $value['alt'] = $alt;
+        return $value;
     }
 }

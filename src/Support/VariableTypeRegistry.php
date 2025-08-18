@@ -16,7 +16,6 @@ use InvalidArgumentException;
 use SmartCms\TemplateBuilder\VariableTypes\ArrayType;
 use SmartCms\TemplateBuilder\VariableTypes\BoolType;
 use SmartCms\TemplateBuilder\VariableTypes\HtmlType;
-use SmartCms\TemplateBuilder\VariableTypes\ImageType;
 use SmartCms\TemplateBuilder\VariableTypes\TextType;
 
 class VariableTypeRegistry
@@ -31,7 +30,6 @@ class VariableTypeRegistry
         $this->register(BoolType::class);
         $this->register(ArrayType::class);
         $this->register(HtmlType::class);
-        $this->register(ImageType::class);
     }
 
     public function register(string $class): void
