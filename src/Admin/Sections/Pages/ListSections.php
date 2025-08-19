@@ -20,6 +20,7 @@ class ListSections extends ListRecords
             // temp fix, because after filament update livewire doesnt handle dynamic variables in schema
             CreateAction::make()->modal()->schema(function (): array {
                 $components = TemplateParser::make(TemplateTypeEnum::SECTION)->getAll();
+
                 return [
                     TextInput::make('name')->required(),
                     Select::make('path')->options($components->pluck('name', 'path')->toArray())->required()->live(),
