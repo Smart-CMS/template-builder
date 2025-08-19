@@ -52,7 +52,7 @@ class SectionResource extends Resource
     {
         return [
             'index' => ListSections::route('/'),
-            'create' => CreateSection::route('/create'),
+            // 'create' => CreateSection::route('/create'),
             'edit' => EditSection::route('/{record}/edit'),
         ];
     }
